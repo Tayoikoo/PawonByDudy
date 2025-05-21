@@ -1,0 +1,98 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Admin;
+use App\Models\MenuCatering;
+use App\Models\Paket;
+use App\Models\User;
+use Auth;
+use Hash;
+use Illuminate\Http\Request;
+
+class PawonController extends Controller
+{
+    public function index()
+    {
+        $packet = Paket::with('menu_catering')->get();
+        return view('pawonbydudy.index', compact('packet'));
+    }
+
+    public function indexAdmin()
+    {
+        return view('pawonbydudy.admin.index');
+    }    
+
+    public function getCheckout()
+    {
+        return view('pawonbydudy.checkout.index');
+    }
+
+    public function showKategori($id_paket)
+    {
+        $menuCatering = MenuCatering::where('id_paket', $id_paket)
+            ->where('status', 1);
+    
+        $packet = Paket::where('id_paket', $id_paket)
+            ->firstOrFail();
+    
+        return view('pawonbydudy.catering.list_paket.showpaket', compact('menuCatering', 'packet'));
+        // return dd($paket);
+    }
+    
+    
+    public function getHistoryOrder()
+    {
+        return view('pawonbydudy.catering.history.index');
+    }
+
+    // Admin Login
+    public function backendAccount()
+    {
+        return view('pawonbydudy.account');
+    }
+
+    public function onLogin(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+    
+        if (Auth::guard('web')->attempt($credentials)) {
+            return redirect()->route('pawonbydudy.index');
+        }
+    
+        if (Auth::guard('admin')->attempt($credentials)) {
+            return redirect()->route('pawonbydudy.index');
+        }
+    
+        return back()->with('error', 'Email/Username atau Password salah');
+    }
+    
+    
+
+    public function onRegister(Request $request)
+    {
+        $request->validate([
+            'username' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:6'
+        ]);
+
+        $user = User::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'hp' => ''
+        ]);
+        
+        Auth::guard('web')->login($user);
+        return redirect()->route('pawonbydudy.index');
+        
+    }
+
+    public function logout()
+    {
+        Auth::guard('web')->logout();
+        Auth::guard('admin')->logout();
+        return redirect()->route('pawonbydudy.index');
+    }   
+}
