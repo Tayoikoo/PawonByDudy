@@ -127,7 +127,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="deskripsi" class="form-label"><strong>Deskripsi Menu:</strong></label>
-                                            <textarea id="deskripsi" name="deskripsi" class="form-control" placeholder="Masukkan deskripsi menu"></textarea>
+                                            <textarea id="ckeditor" name="deskripsi" class="form-control" placeholder="Masukkan deskripsi menu"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="harga" class="form-label"><strong>Harga:</strong></label>
@@ -142,14 +142,6 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="status" class="form-label"><strong>Status:</strong></label>
-                                            <select id="status" name="status" class="form-select">
-                                                <option value="">-- Pilih Status --</option>
-                                                <option value="0">Private</option>
-                                                <option value="1">Public</option>
-                                            </select>
-                                        </div> 
                                     </div>
                                 </div>
                             </div>
@@ -180,6 +172,10 @@
                                 preview.style.display = 'none';
                             }
                         });
+                        
+                        document.getElementById('closeBtn').addEventListener('click', () => {
+                            Swal.close();
+                        });                                
 
                         const ckeditorElement = document.querySelector('#ckeditor');
                         if (ckeditorElement) {
@@ -188,11 +184,7 @@
                                 .catch(error => {
                                     console.error('CKEditor init failed:', error);
                                 });
-                        }
-                        
-                        document.getElementById('closeBtn').addEventListener('click', () => {
-                            Swal.close();
-                        });                                
+                        }                        
                     }                    
                 });
 
@@ -335,7 +327,7 @@
                                 .catch(error => {
                                     console.error('CKEditor init failed:', error);
                                 });
-                        }                        
+                        }   
                     }            
                 });
 

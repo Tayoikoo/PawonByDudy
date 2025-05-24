@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('order', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_order')->primary(true); 
+            $table->id('id_order'); 
             $table->unsignedBigInteger('id_user')->nullable(); 
             $table->string('metode_pembayaran', 16);
             $table->string('status', 16); // Proses & Selesai
-            $table->double('total_harga'); 
+            $table->double('total_harga')->nullable(); 
             $table->text('alamat')->nullable(); 
             $table->string('pos', 12)->nullable();             
-            $table->date('tanggal_pemesanan');
+            $table->date('tanggal_pemesanan')->nullable();
             $table->unsignedBigInteger('id_pengirim')->nullable(); 
             $table->foreign('id_user')->references('id_user')->on('user')->onDelete('cascade');
             $table->foreign('id_pengirim')->references('id_pengirim')->on('pengirim')->onDelete('cascade');

@@ -52,7 +52,7 @@
                                  alt="{{ $menu->nama }}"
                                  class="card-img-top object-fit-cover">
                             <div class="hover-overlay">
-                            <a href="{{ route('pawonbydudy.showinfopaket', $menu->paket->id_paket) }}" class="lihat-btn text-decoration-none">Lihat</a>
+                            <a href="{{ route('pawonbydudy.showinfopaket', $menu->id_catering) }}" class="lihat-btn text-decoration-none">Lihat</a>
                             </div>
                         </div>
                         <div class="card-body">

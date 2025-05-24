@@ -6,9 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    public $timestamps = true;
+    public $timestamps = false;
     protected $table = "order";
     protected $guarded = ['id_order'];
+    protected $primaryKey = 'id_order';
+
+
+    public function orderItems() 
+    { 
+        return $this->hasMany(OrderItem::class, 'id_order', 'id_order'); 
+    }    
 
     public function pengirim()
     {

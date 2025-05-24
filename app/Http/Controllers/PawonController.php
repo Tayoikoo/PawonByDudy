@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\MenuCatering;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Paket;
 use App\Models\User;
 use Auth;
@@ -25,8 +27,25 @@ class PawonController extends Controller
 
     public function getCheckout()
     {
-        return view('pawonbydudy.checkout.index');
+        $user = Auth::guard('web')->user();
+    
+        if (!$user) {
+            return redirect()->route('pawonbydudy.showlogin')->with('error', 'Harap login akun lebih dahulu!');
+        }
+    
+        $order = Order::where('id_user', $user->id_user)
+        ->where('status', 'pending', 'paid')->first();
+    
+        if (!$order) {
+            return redirect()->back()->with('error', 'Tidak ada pesanan ditemukan!');
+        }
+    
+        // $orderItem = OrderItem::where('id_order', $order->id_order)->get();
+        $order->load('orderItems.menu_catering'); 
+    
+        return view('pawonbydudy.checkout.index', compact('order'));
     }
+    
 
     public function showKategori($id_paket)
     {
@@ -47,6 +66,7 @@ class PawonController extends Controller
         ->first();
     
         return view('pawonbydudy.catering.show_menu.index', compact('menuCatering'));
+        // dd($menuCatering);
     }
     
     public function getHistoryOrder()

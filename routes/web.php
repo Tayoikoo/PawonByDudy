@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CateringController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\PawonController;
 use App\Http\Controllers\PengirimController;
@@ -39,8 +40,14 @@ Route::middleware('admin.auth')->group(function () {
     Route::resource('admin-panel/beranda/pengirim', PengirimController::class, ['as' => 'pawonbydudy_pengirim']);
 });
 
-Route::middleware('user.auth')->group(function () {
-    // Route::resource('')
+Route::middleware('web')->group(function () {
+    Route::post('/checkout/{id}', [OrderController::class, 'addToCheckout'])->name('pawonbydudy.order_add');
+    Route::post('/checkout/increase/{id_item}', [OrderController::class, 'increaseQuantity'])->name('checkout.increase');
+    Route::post('/checkout/decrease/{id_item}', [OrderController::class, 'decreaseQuantity'])->name('checkout.decrease');
+    Route::post('/checkout/update/{id}', [OrderController::class, 'updateJumlah']);
+
+
+    Route::delete('/checkout/delete/{id_item}', [OrderController::class, 'deleteFromCheckout'])->name('pawonbydudy.order_delete');
 });
 
 

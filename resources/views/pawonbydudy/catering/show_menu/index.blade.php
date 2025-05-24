@@ -7,7 +7,7 @@
         <div class="col-md-4 text-center">
             <img src="{{ $menuCatering->foto ? asset('storage/' . $menuCatering->foto) : asset('img/icons/default.png') }}"
                  alt="{{ $menuCatering->nama }}" class="img-fluid rounded mb-3">
-            <form action="" method="POST">
+            <form action="{{ route('pawonbydudy.order_add', $menuCatering->id_catering) }}" method="POST">
                 @csrf
                 <button type="submit" class="btn btn-success w-100">Masuk ke Keranjang</button>
             </form>

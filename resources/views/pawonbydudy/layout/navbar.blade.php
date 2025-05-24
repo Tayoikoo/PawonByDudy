@@ -42,7 +42,7 @@
                     </a>                    
                     <ul class="dropdown-menu dropdown-custom animate-dropdown" aria-labelledby="userMenu" style="background: linear-gradient(180deg,rgb(1, 197, 89),rgb(8, 204, 8));">
                         <li>
-                            <a class="dropdown-item text-white" href="{{ route('pawonbydudy.checkout') }}">Checkout (0)</a>
+                            <a class="dropdown-item text-white" href="{{ route('pawonbydudy.checkout') }}">Checkout</a>
                         </li>
                         <li>
                             <a class="dropdown-item text-white" href="{{ route('pawonbydudy.history_order') }}">History Pesanan</a>
