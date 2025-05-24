@@ -40,6 +40,14 @@ class PawonController extends Controller
         // return dd($paket);
     }
     
+    public function showInfo($id_catering)
+    {
+        $menuCatering = MenuCatering::where('id_catering', $id_catering)
+        ->where('status', 1)
+        ->first();
+    
+        return view('pawonbydudy.catering.show_menu.index', compact('menuCatering'));
+    }
     
     public function getHistoryOrder()
     {
@@ -47,10 +55,27 @@ class PawonController extends Controller
     }
 
     // Admin Login
-    public function backendAccount()
+    public function backendAccount($id)
     {
-        return view('pawonbydudy.account');
+        $user = User::where('id_user', $id)->firstOrFail();
+        return view('pawonbydudy.users.index', compact('user'));
     }
+
+    public function updateAccount(Request $request, $id_user)
+    {
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'phone' => 'required|digits_between:10,15',
+        ]);
+    
+        $user = User::where('id_user', $id_user)->firstOrFail();
+    
+        $user->username = $request->input('username');
+        $user->hp = $request->input('phone');
+        $user->save();
+    
+        return redirect()->back()->with('success', 'Akun berhasil diperbarui!');
+    }    
 
     public function onLogin(Request $request)
     {

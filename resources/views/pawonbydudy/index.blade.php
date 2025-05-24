@@ -1,6 +1,44 @@
 @extends('pawonbydudy.layout.layout')
 <!-- Section = bagian atau isi  -->
 @section('content') 
+<style>
+    .card-hover {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card-hover .hover-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: 0.3s ease-in-out;
+    }
+
+    .card-hover:hover .hover-overlay {
+        opacity: 1;
+    }
+
+    .lihat-btn {
+        background-color: #ffffff;
+        color: #000000;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-weight: bold;
+        border-radius: 0.25rem;
+    }
+
+    .lihat-btn:hover {
+        background-color: #f8f9fa;
+    }
+</style>
+
 <div class="container-fluid">
     <div class="row mt-4">
         <div class="col-md-12 text-center">
@@ -57,9 +95,12 @@
                         <div class="row">
                             @foreach ($paket->menu_catering->where('status', 1) as $menu)
                                 <div class="col-6 col-md-2 mb-3">
-                                    <div class="card h-100">
+                                    <div class="card h-100 card-hover">
                                         <div class="ratio ratio-16x9">
                                             <img class="card-img-top object-fit-cover" src="{{ $menu->foto ? asset('storage/' . $menu->foto) : asset('img/icons/default.png') }}" alt="{{ $menu->nama }}">
+                                            <div class="hover-overlay">
+                                                <a href="{{ route('pawonbydudy.showinfopaket', $menu->id_catering) }}" class="lihat-btn text-decoration-none">Lihat</a>
+                                            </div>
                                         </div>
                                         <div class="card-body p-3">
                                             <h5 class="card-title fs-6 mb-1">{{ $menu->nama }}</h5>
@@ -95,21 +136,3 @@
     </div>
 </div>
 @endsection
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <div class="col-12">
-    <p class="mt-2 text-center">Selamat datang di PawonByDudy</p>
-</div> -->
-<!-- <div class="col-4 bg-success">.col-4<br>Since 9 + 4 = 13 &gt; 12, this 4-column-wide div gets wrapped onto a new line as one contiguous unit.</div> -->
-<!-- <div class="col-6 bg-warning">.col-6<br>Subsequent columns continue along the new line.</div> -->
-<!-- <div class="col-2 bg-danger">.col-6<br>Subsequent columns continue along the new line.</div> -->

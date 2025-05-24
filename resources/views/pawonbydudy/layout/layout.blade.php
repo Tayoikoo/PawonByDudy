@@ -59,5 +59,19 @@
             return /^-?\d+$/.test(value);
         }           
     </script>
+
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ckeditorElement = document.querySelector('#ckeditor');
+            if (ckeditorElement) {
+                ClassicEditor
+                    .create(ckeditorElement)
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+        });
+    </script>
 </body>
 </html>

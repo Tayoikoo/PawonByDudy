@@ -16,14 +16,15 @@ Route::controller(PawonController::class)->group(function() {
     Route::get('index', 'index')->name('pawonbydudy.index');
     Route::get('checkout', 'getCheckout')->name('pawonbydudy.checkout');
     Route::get('history', 'getHistoryOrder')->name('pawonbydudy.history_order');
-    Route::get('backend/account', 'backendAccount')->name('pawonbydudy.akun');
     Route::get('kategori/{id_paket}', 'showKategori')->name('pawonbydudy.listkategori');
+    Route::get('kategori/paket/{id_paket}', 'showInfo')->name('pawonbydudy.showinfopaket');
+    Route::get('backend/account/user/{id_user}', 'backendAccount')->name('pawonbydudy.akun');
 
     Route::post('backend/account/register', 'onRegister')->name('pawonbydudy.register');
     Route::post('backend/account/login', 'onLogin')->name('pawonbydudy.login');
     Route::post('backend/account/logout', 'logout')->name('pawonbydudy.logout');
 
-    
+    Route::put('backend/account/user/{id_user}/update', 'updateAccount')->name('pawonbydudy.akun.update');
 });
 
 Route::middleware('admin.auth')->group(function () {
@@ -35,6 +36,10 @@ Route::middleware('admin.auth')->group(function () {
     Route::resource('admin-panel/beranda/paket', PaketController::class, ['as' => 'pawonbydudy_paket']); 
     Route::resource('admin-panel/beranda/catering', CateringController::class, ['as' => 'pawonbydudy_catering']);
     Route::resource('admin-panel/beranda/pengirim', PengirimController::class, ['as' => 'pawonbydudy_pengirim']);
+});
+
+Route::middleware('user.auth')->group(function () {
+    
 });
 
 

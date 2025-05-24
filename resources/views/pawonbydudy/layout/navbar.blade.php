@@ -32,7 +32,9 @@
                 </li>                          
             @auth('web')
                 @php
-                    $username = Auth::guard('web')->user()->username;
+                    $user = Auth::guard('web')->user();
+                    $id = $user->id_user;
+                    $username = $user->username;
                 @endphp
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -48,7 +50,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('pawonbydudy.akun') }}">Akun Saya ({{ $username }})</a>
+                    <a class="nav-link text-white" href="{{ route('pawonbydudy.akun', ['id_user' => $id]) }}">Akun Saya ({{ $username }})</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link text-white" onclick="event.preventDefault(); document.getElementById('logout-form-web').submit();">Logout</a>
