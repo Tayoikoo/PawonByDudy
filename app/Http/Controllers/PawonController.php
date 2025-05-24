@@ -61,6 +61,11 @@ class PawonController extends Controller
         return view('pawonbydudy.users.index', compact('user'));
     }
 
+    public function showLogin()
+    {
+        return view('pawonbydudy.account');
+    }   
+
     public function updateAccount(Request $request, $id_user)
     {
         $request->validate([

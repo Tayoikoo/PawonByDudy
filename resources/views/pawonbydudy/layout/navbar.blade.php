@@ -95,7 +95,7 @@
                 </li>
             @else
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('pawonbydudy.akun') }}">Login</a>
+                    <a class="nav-link text-white" href="{{ route('pawonbydudy.showlogin') }}">Login</a>
                 </li>
             @endauth       
             </ul>

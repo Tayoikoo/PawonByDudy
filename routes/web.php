@@ -19,6 +19,7 @@ Route::controller(PawonController::class)->group(function() {
     Route::get('kategori/{id_paket}', 'showKategori')->name('pawonbydudy.listkategori');
     Route::get('kategori/paket/{id_paket}', 'showInfo')->name('pawonbydudy.showinfopaket');
     Route::get('backend/account/user/{id_user}', 'backendAccount')->name('pawonbydudy.akun');
+    Route::get('backend/account', 'showLogin')->name('pawonbydudy.showlogin');
 
     Route::post('backend/account/register', 'onRegister')->name('pawonbydudy.register');
     Route::post('backend/account/login', 'onLogin')->name('pawonbydudy.login');
@@ -39,7 +40,7 @@ Route::middleware('admin.auth')->group(function () {
 });
 
 Route::middleware('user.auth')->group(function () {
-    
+    // Route::resource('')
 });
 
 
