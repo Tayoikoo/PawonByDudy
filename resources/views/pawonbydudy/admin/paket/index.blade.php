@@ -116,8 +116,9 @@
                 });
 
                 // Set the form action dynamically after Swal has opened
-                const actionUrl = "{{ route('pawonbydudy_paket.paket.update', '') }}";
-                $('#editPaket').attr('action', actionUrl + '/' + id);
+                let actionUrl = "{{ route('pawonbydudy_paket.paket.update', ':id') }}";
+                actionUrl = actionUrl.replace(':id', id);
+                $('#editPaket').attr('action', actionUrl);    
 
                 $('#submitForm').click(function () {
                     // Validate form inputs

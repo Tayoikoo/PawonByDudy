@@ -38,6 +38,7 @@ Route::middleware('admin.auth')->group(function () {
     Route::resource('admin-panel/beranda/paket', PaketController::class, ['as' => 'pawonbydudy_paket']); 
     Route::resource('admin-panel/beranda/catering', CateringController::class, ['as' => 'pawonbydudy_catering']);
     Route::resource('admin-panel/beranda/pengirim', PengirimController::class, ['as' => 'pawonbydudy_pengirim']);
+    Route::resource('admin-panel/beranda/order', OrderController::class, ['as' => 'pawonbydudy_order']);
 });
 
 Route::middleware('web')->group(function () {
@@ -45,8 +46,10 @@ Route::middleware('web')->group(function () {
     Route::post('/checkout/increase/{id_item}', [OrderController::class, 'increaseQuantity'])->name('checkout.increase');
     Route::post('/checkout/decrease/{id_item}', [OrderController::class, 'decreaseQuantity'])->name('checkout.decrease');
     Route::post('/checkout/update/{id}', [OrderController::class, 'updateJumlah']);
-
-
+    Route::post('/checkout/payment/{id}', [OrderController::class, 'doPayment'])->name('pawonbydudy.checkout.payment');
+    
+    Route::get('/order/invoice/{id_order}', [OrderController::class, 'downloadInvoice'])->name('pawonbydudy.order.invoice');
+    Route::get('/order/finish/{id_order}', [OrderController::class, 'onPaymentFinish'])->name('pawonbydudy.order.finish');
     Route::delete('/checkout/delete/{id_item}', [OrderController::class, 'deleteFromCheckout'])->name('pawonbydudy.order_delete');
 });
 

@@ -151,8 +151,9 @@
                 });
 
                 // Set the form action dynamically after Swal has opened
-                const actionUrl = "{{ route('pawonbydudy_user.user.update', '') }}";
-                $('#editUser').attr('action', actionUrl + '/' + id);
+                let actionUrl = "{{ route('pawonbydudy_user.user.update', ':id') }}";
+                actionUrl = actionUrl.replace(':id', id);
+                $('#editUser').attr('action', actionUrl);                
 
                 $('#submitForm').click(function () {
                     // Validate form inputs

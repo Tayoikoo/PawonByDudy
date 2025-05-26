@@ -83,7 +83,7 @@
                             <a class="dropdown-item text-white" href="{{ route('pawonbydudy_pengirim.pengirim.index') }}">Daftar Pengirim</a>
                         </li>                        
                         <li>
-                            <a class="dropdown-item text-white" href="#">Daftar Order</a>
+                            <a class="dropdown-item text-white" href="{{ route('pawonbydudy_order.order.index') }}">Daftar Order</a>
                         </li>                        
                     </ul>
                 </li>                

@@ -116,7 +116,7 @@
                 Swal.fire({
                     title: 'Edit User',
                     html: `
-                        <form id="editPaket" method="POST" enctype="multipart/form-data" style="text-align: left;">
+                        <form id="editPengirim" method="POST" enctype="multipart/form-data" style="text-align: left;">
                             @method('PUT')
                             @csrf
                             <input type="hidden" name="id_paket" value="${id}">
@@ -138,8 +138,9 @@
                 });
 
                 // Set the form action dynamically after Swal has opened
-                const actionUrl = "{{ route('pawonbydudy_pengirim.pengirim.update', '') }}";
-                $('#editPaket').attr('action', actionUrl + '/' + id);
+                let actionUrl = "{{ route('pawonbydudy_pengirim.pengirim.update', ':id') }}";
+                actionUrl = actionUrl.replace(':id', id);
+                $('#editPengirim').attr('action', actionUrl);
 
                 $('#submitForm').click(function () {
                     // Validate form inputs
@@ -168,7 +169,7 @@
                             confirmButtonText: 'OK'
                         });
                     } else {
-                        $('#editPaket').submit();
+                        $('#editPengirim').submit();
                     }
                 });                
             });    

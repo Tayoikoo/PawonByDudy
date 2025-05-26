@@ -11,30 +11,54 @@
             <div class="col-md-12">
                 <div class="table-responsive mt-4 text-center">
                     <table class="table table-bordered table-striped">
-                        <thead>
+                    <thead>
+                        <tr>
+                            <td>No Pesanan</td>
+                            <td>Tanggal</td>
+                            <td>Total Bayar</td>
+                            <td>Status</td>
+                            <td>Aksi</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($orders as $order)
                             <tr>
-                                <td>ID Pesanan</td>
-                                <td>Tanggal</td>
-                                <td>Total Bayar</td>
-                                <td>Status</td>
-                                <td>Detail</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>{{ date('d-m-Y H:i:s') }}</td>
-                                <td>Rp. 10.000</td>
+                                <td>{{ $order->id_order }}</td>
+                                <td>{{ \Carbon\Carbon::parse($order->tanggal_pemesanan)->format('d-m-Y H:i:s') }}</td>
+                                <td>Rp. {{ number_format($order->total_harga, 0, ',', '.') }}</td>
                                 <td>
-                                    <p class="rounded" style="background-color:rgb(0, 123, 255); color:rgb(255, 255, 255); padding: 5px;">Proses</p>
+                                    @switch($order->status)
+                                        @case('pending')
+                                            <p class="rounded" style="background-color:rgb(255, 193, 7); color:white; padding: 5px;">
+                                                {{ ucfirst($order->status) }}
+                                            </p>
+                                            @break
+
+                                        @case('paid')
+                                            <p class="rounded" style="background-color:rgb(40, 167, 69); color:white; padding: 5px;">
+                                                {{ ucfirst($order->status) }}
+                                            </p>
+                                            @break
+
+                                        @default
+                                            <p class="rounded" style="background-color:gray; color:white; padding: 5px;">
+                                                {{ ucfirst($order->status) }}
+                                            </p>
+                                    @endswitch
                                 </td>
                                 <td>
-                                    <button class="btn btn-success">
-                                        Lihat Detail
-                                    </button>
+                                    <a href="{{ route('pawonbydudy.order.invoice', ['id_order' => $order->id_order]) }}" class="btn btn-primary" target="_blank">
+                                        Cetak Invoice
+                                    </a>
                                 </td>
                             </tr>
-                        </tbody>
+                        @empty
+                            <tr>
+                                <td colspan="6">Belum ada pesanan.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+
                     </table>
                 </div>
             </div>

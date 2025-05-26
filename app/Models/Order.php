@@ -15,7 +15,12 @@ class Order extends Model
     public function orderItems() 
     { 
         return $this->hasMany(OrderItem::class, 'id_order', 'id_order'); 
-    }    
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id_user');
+    }
 
     public function pengirim()
     {

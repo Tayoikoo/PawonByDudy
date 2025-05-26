@@ -19,7 +19,7 @@ return new class extends Migration
             $table->double('total_harga')->nullable(); 
             $table->text('alamat')->nullable(); 
             $table->string('pos', 12)->nullable();             
-            $table->date('tanggal_pemesanan')->nullable();
+            $table->datetime('tanggal_pemesanan')->nullable();
             $table->unsignedBigInteger('id_pengirim')->nullable(); 
             $table->foreign('id_user')->references('id_user')->on('user')->onDelete('cascade');
             $table->foreign('id_pengirim')->references('id_pengirim')->on('pengirim')->onDelete('cascade');

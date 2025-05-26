@@ -211,8 +211,9 @@
                 });
 
                 // Set the form action dynamically after Swal has opened
-                const actionUrl = "{{ route('pawonbydudy_admin.admin.update', '') }}";
-                $('#editAdmin').attr('action', actionUrl + '/' + id);
+                let actionUrl = "{{ route('pawonbydudy_admin.admin.update', ':id') }}";
+                actionUrl = actionUrl.replace(':id', id);
+                $('#editAdmin').attr('action', actionUrl);
 
                 $('#submitForm').click(function () {
                     // Validate form inputs

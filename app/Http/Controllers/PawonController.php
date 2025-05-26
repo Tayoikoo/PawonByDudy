@@ -34,15 +34,12 @@ class PawonController extends Controller
         }
     
         $order = Order::where('id_user', $user->id_user)
-        ->where('status', 'pending', 'paid')->first();
+        ->where('status', 'pending')->first();
     
         if (!$order) {
-            return redirect()->back()->with('error', 'Tidak ada pesanan ditemukan!');
+            return redirect()->route('pawonbydudy.index')->with('error', 'Anda belum memesan menu!');
         }
-    
-        // $orderItem = OrderItem::where('id_order', $order->id_order)->get();
         $order->load('orderItems.menu_catering'); 
-    
         return view('pawonbydudy.checkout.index', compact('order'));
     }
     
@@ -71,7 +68,22 @@ class PawonController extends Controller
     
     public function getHistoryOrder()
     {
-        return view('pawonbydudy.catering.history.index');
+        $user = Auth::guard('web')->user();
+    
+        if (!$user) {
+            return redirect()->route('pawonbydudy.showlogin')->with('error', 'Harap login akun lebih dahulu!');
+        }
+    
+        $orders = Order::where('id_user', $user->id_user)
+            ->where('status', 'paid')
+            ->orderBy('tanggal_pemesanan', 'desc')
+            ->get();
+
+        foreach ($orders as $order) {
+            $order->load('orderItems.menu_catering');
+        }
+
+        return view('pawonbydudy.catering.history.index', compact('orders'));
     }
 
     // Admin Login
@@ -116,8 +128,6 @@ class PawonController extends Controller
     
         return back()->with('error', 'Email/Username atau Password salah');
     }
-    
-    
 
     public function onRegister(Request $request)
     {
